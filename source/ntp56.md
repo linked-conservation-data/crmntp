@@ -1,17 +1,35 @@
-## NTP56 does not bear feature of type (is type of feature not found on) {#ntp56}
+# NTP56 does not bear feature of type
 
-## Domain:
+## Domain: 
 
-E19 Physical Thing
+E19 Physical Object
 
-## Range:
+## Range: 
 
 E55 Type
 
-## Subproperty of:
+## Superproperty of: 
 
-E18 Physical Thing. [TP46](#tp46) is composed of physical thing of type: E55 Type
+todo
 
-## Quantification:
+## Subproperty of: 
 
-## Scope note:
+todo
+
+## Quantification: 
+
+todo
+
+## Scope note: 
+
+scope note goes here
+
+## Examples: 
+
+* cover does not bear feature of type gold tooling
+
+## In First Order Logic: 
+
+NTP56(x,y) ⇒ E19(x)
+NTP56(x,y) ⇒ E55(y)
+

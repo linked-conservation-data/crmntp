@@ -1,15 +1,35 @@
-## NTP46 is not composed of physical thing of type (is type of physical thing not composing)
+# NTP46 is not composed of physical thing of type
 
-## Domain:
+## Domain: 
 
-E19 Physical Thing
+E18 Physical Thing
 
-## Range:
+## Range: 
 
 E55 Type
 
-## Subproperty of:
+## Superproperty of: 
 
-## Quantification:
+todo
 
-## Scope note:
+## Subproperty of: 
+
+todo
+
+## Quantification: 
+
+todo
+
+## Scope note: 
+
+scope note goes here
+
+## Examples: 
+
+* binding is not composed of boards
+
+## In First Order Logic: 
+
+NTP46(x,y) ⇒ E18(x)
+NTP46(x,y) ⇒ E55(y)
+

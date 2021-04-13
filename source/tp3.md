@@ -26,7 +26,7 @@ This property is a shortcut of the fully developed path: E1 CRM Entity, _P3 has 
 
 ## Examples: 
 
-* 
+* todo
 
 ## In First Order Logic: 
 

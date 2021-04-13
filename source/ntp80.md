@@ -26,7 +26,7 @@ scope note goes here
 
 ## Examples: 
 
-* 
+* todo
 
 ## In First Order Logic: 
 

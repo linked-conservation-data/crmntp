@@ -70,7 +70,7 @@ def ingest(files, curpara):
     for file in files:
         mdfile = open(file[0], "r").read()
         html = mistune.markdown(mdfile)
-        parsed_html = BeautifulSoup(html)
+        parsed_html = BeautifulSoup(html, features="lxml")
         heading1 = parsed_html.find_all('h1')[0].contents[0]  # should be only one
         propid = str.lower(heading1[:heading1.find(" ")])
         curpara = insert_paragraph_after(curpara, heading1, "CRM Property Label")
@@ -82,23 +82,37 @@ def ingest(files, curpara):
         curpara = property[0]
         for heading2 in headings2:
             curpara = insert_paragraph_after(curpara, heading2.contents[0], "CRM Description Label")
-            curtextruns = heading2.find_next("p")
+            if heading2.contents[0] == "Examples:":
+                curtextruns = heading2.find_next("ul")
+            else:
+                curtextruns = heading2.find_next("p")
+
             if heading2.contents[0] == "Domain:" or heading2.contents[0] == "Range:":
                 curstyle = "CRM Domain Range"
+            elif heading2.contents[0] == "Superproperty of:":
+                curstyle = "CRM Super Sub Property"
             elif heading2.contents[0] == "Subproperty of:":
                 curstyle = "CRM Super Sub Property"
             elif heading2.contents[0] == "Quantification:":
                 curstyle = "CRM Quantification"
             elif heading2.contents[0] == "Scope note:":
                 curstyle = "CRM Scope Note Text"
+            elif heading2.contents[0] == "Examples:":
+                curstyle = "CRM Example"
+            elif heading2.contents[0] == "In First Order Logic:":
+                curstyle = "CRM First Order Logic"
 
             curpara = insert_paragraph_after(curpara, None, curstyle)
+            if curtextruns.name == 'ul': # if this is a list
+                curtextruns.contents = curtextruns.contents[1:-1] # remove leading and ending linefeeds
             for curtextrun in curtextruns:
                 if curtextrun.name == "a":  # if this part of the run is a link
                     for attr, curlink in curtextrun.attrs.items():
                         if attr == 'href':
                             curlink = "_Ref_id_num_" + curlink[1:]  # trim the '#' from markdown
                             append_ref_to_paragraph(curpara, curlink, curtextrun.contents[0])
+                elif curtextrun.name == "li": # if this is a list of examples
+                    curpara.add_run(curtextrun.contents[0])
                 else:  # treat everything else as text for now
                     curpara.add_run(curtextrun)
     return curpara

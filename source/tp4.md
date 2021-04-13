@@ -26,7 +26,7 @@ This property is a shortcut of the fully developed path: E2 Temporal Entity, _P4
 
 ## Examples: 
 
-* 
+* todo
 
 ## In First Order Logic: 
 

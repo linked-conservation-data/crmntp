@@ -59,7 +59,7 @@ def find(pattern, path):
             if fnmatch.fnmatch(name, pattern):
                 tpfile = os.path.join(root, name)
                 tpnumber = re.findall("[0-9]+", tpfile)
-                result[tpfile] = tpnumber
+                result[tpfile] = int(tpnumber[0])
     result = sorted(result.items(), key=lambda kv: kv[1])
     return result
 

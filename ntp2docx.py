@@ -63,6 +63,46 @@ def find(pattern, path):
     result = sorted(result.items(), key=lambda kv: kv[1])
     return result
 
+# ingest group of markdown files describing properties into the main document
+def ingest(files, curpara):
+    properties = {}
+
+    for file in files:
+        mdfile = open(file[0], "r").read()
+        html = mistune.markdown(mdfile)
+        parsed_html = BeautifulSoup(html)
+        heading1 = parsed_html.find_all('h1')[0].contents[0]  # should be only one
+        propid = str.lower(heading1[:heading1.find(" ")])
+        curpara = insert_paragraph_after(curpara, heading1, "CRM Property Label")
+        curbookmark = add_bookmark(curpara, propid)
+        properties[propid] = [curpara, curbookmark, parsed_html]
+
+    for propertyname, property in properties.items():
+        headings2 = property[2].find_all('h2')
+        curpara = property[0]
+        for heading2 in headings2:
+            curpara = insert_paragraph_after(curpara, heading2.contents[0], "CRM Description Label")
+            curtextruns = heading2.find_next("p")
+            if heading2.contents[0] == "Domain:" or heading2.contents[0] == "Range:":
+                curstyle = "CRM Domain Range"
+            elif heading2.contents[0] == "Subproperty of:":
+                curstyle = "CRM Super Sub Property"
+            elif heading2.contents[0] == "Quantification:":
+                curstyle = "CRM Quantification"
+            elif heading2.contents[0] == "Scope note:":
+                curstyle = "CRM Scope Note Text"
+
+            curpara = insert_paragraph_after(curpara, None, curstyle)
+            for curtextrun in curtextruns:
+                if curtextrun.name == "a":  # if this part of the run is a link
+                    for attr, curlink in curtextrun.attrs.items():
+                        if attr == 'href':
+                            curlink = "_Ref_id_num_" + curlink[1:]  # trim the '#' from markdown
+                            append_ref_to_paragraph(curpara, curlink, curtextrun.contents[0])
+                else:  # treat everything else as text for now
+                    curpara.add_run(curtextrun)
+    return curpara
+
 # open template.docx
 document = Document("template.docx")
 
@@ -72,45 +112,14 @@ for pdparagraph in pdparagraphs:
     if pdparagraph.text == "CRMntp Property Declarations":
          break
 
-# find all files with property definitions as included in the repo
+# find all files with tp property definitions as included in the repo
 files = find('tp*.md', 'source')
-properties = {}
-curpara = pdparagraph
-
-for file in files:
-    mdfile = open(file[0], "r").read()
-    html = mistune.markdown(mdfile)
-    parsed_html = BeautifulSoup(html)
-    heading1 = parsed_html.find_all('h1')[0].contents[0] #should be only one
-    propid = str.lower(heading1[:heading1.find(" ")])
-    curpara = insert_paragraph_after(curpara, heading1, "CRM Property Label")
-    curbookmark = add_bookmark(curpara, propid)
-    properties[propid] = [curpara, curbookmark, parsed_html]
-
-for propertyname, property in properties.items():
-    headings2 = property[2].find_all('h2')
-    curpara = property[0]
-    for heading2 in headings2:
-        curpara = insert_paragraph_after(curpara, heading2.contents[0], "CRM Description Label")
-        curtextruns = heading2.find_next("p")
-        if heading2.contents[0] == "Domain:" or heading2.contents[0] == "Range:":
-            curstyle = "CRM Domain Range"
-        elif heading2.contents[0] == "Subproperty of:":
-            curstyle = "CRM Super Sub Property"
-        elif heading2.contents[0] == "Quantification:":
-            curstyle = "CRM Quantification"
-        elif heading2.contents[0] == "Scope note:":
-            curstyle = "CRM Scope Note Text"
-
-        curpara = insert_paragraph_after(curpara, None, curstyle)
-        for curtextrun in curtextruns:
-            if curtextrun.name == "a": # if this part of the run is a link
-                for attr, curlink in curtextrun.attrs.items():
-                    if attr == 'href':
-                        curlink = "_Ref_id_num_" + curlink[1:] #trim the '#' from markdown
-                        append_ref_to_paragraph(curpara, curlink, curtextrun.contents[0])
-            else: # treat everything else as text for now
-                curpara.add_run(curtextrun)
+# ingest them and return the last paragraph of the ingestion
+lasttpparagraph = ingest(files, pdparagraph)
+# find all files with ntp property definitions as included in the repo
+files = find('ntp*.md', 'source')
+# ingest them and return the last paragraph of the ingestion
+lastntpparagraph = ingest(files, lasttpparagraph)
 
 #curpara = insert_paragraph_after(curpara, "domain ")
 #append_ref_to_paragraph(curpara, properties[propid][1], "link")

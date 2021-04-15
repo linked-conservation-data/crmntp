@@ -141,76 +141,36 @@ files = find('ntp*.md', 'source')
 # ingest them and return the last paragraph of the ingestion
 lastntpparagraph = ingest(files, lasttpparagraph)
 
-#curpara = insert_paragraph_after(curpara, "domain ")
-#append_ref_to_paragraph(curpara, properties[propid][1], "link")
-
-# for file in files:
-#     mdfile = open(file[0], "r").read()
-#     html = mistune.markdown(mdfile)
-#     parsed_html = BeautifulSoup(html)
-#     heading1 = parsed_html.find_all('h1')[0].contents[0] #should be only one
-#     curpara = insert_paragraph_after(pdparagraph, heading1, "CRM Property Label")
-#     headings2 = parsed_html.find_all('h2')
-#     for heading2 in headings2:
-#         curpara = insert_paragraph_after(curpara, heading2.contents[0], "CRM Description Label")
-#         curtext = heading2.find_next("p").contents[0]
-#         if heading2.contents[0] == "Domain:" or heading2.contents[0] == "Range:":
-#             curpara = insert_paragraph_after(curpara, curtext, "CRM Domain Range")
-#         elif heading2.contents[0] == "Subproperty of:":
-#             curpara = insert_paragraph_after(curpara, curtext, "CRM Super Sub Property")
-#         elif heading2.contents[0] == "Quantification:":
-#             curpara = insert_paragraph_after(curpara, curtext, "CRM Quantification")
-#         elif heading2.contents[0] == "Scope note:":
-#             curpara = insert_paragraph_after(curpara, curtext, "CRM Scope Note Text")
-
-# styles = document.styles
-
-# paragraph_styles = [
-#    s for s in styles if s.type == WD_STYLE_TYPE.PARAGRAPH
-# ]
+# # add table of contents from here: https://github.com/python-openxml/python-docx/issues/36#issuecomment-145302669
+# # but it works on Windows MS Word only I am afraid...
+# # find the heading of the index
+# indexparagraphs = document.paragraphs
+# for indexparagraph in indexparagraphs:
+#     if indexparagraph.text == "Index":
+#          break
+#
+# paragraph = insert_paragraph_after(indexparagraph)
+# run = paragraph.add_run()
+# fldChar = OxmlElement('w:fldChar')  # creates a new element
+# fldChar.set(qn('w:fldCharType'), 'begin')  # sets attribute on element
+# instrText = OxmlElement('w:instrText')
+# instrText.set(qn('xml:space'), 'preserve')  # sets attribute on element
+# instrText.text = 'TOC \\o "1-3" \\h \\z \\u'  # change 1-3 depending on heading levels you need
+#
+# fldChar2 = OxmlElement('w:fldChar')
+# fldChar2.set(qn('w:fldCharType'), 'separate')
+# fldChar3 = OxmlElement('w:t')
+# fldChar3.text = "Right-click to update field."
+# fldChar2.append(fldChar3)
+#
+# fldChar4 = OxmlElement('w:fldChar')
+# fldChar4.set(qn('w:fldCharType'), 'end')
+#
+# r_element = run._r
+# r_element.append(fldChar)
+# r_element.append(instrText)
+# r_element.append(fldChar2)
+# r_element.append(fldChar4)
+# p_element = paragraph._p
 
 document.save('demo.docx')
-
-# for style in paragraph_styles:
-#      if style == "Heading 1":
-#          pass
-
-# document.add_heading('Document Title', 0)
-#
-# p = document.add_paragraph('A plain paragraph having some ')
-# p.add_run('bold').bold = True
-# p.add_run(' and some ')
-# p.add_run('italic.').italic = True
-#
-# document.add_heading('Heading, level 1', level=1)
-# document.add_paragraph('Intense quote', style='Intense Quote')
-#
-# document.add_paragraph(
-#     'first item in unordered list', style='List Bullet'
-# )
-# document.add_paragraph(
-#     'first item in ordered list', style='List Number'
-# )
-#
-# document.add_picture('monty-truth.png', width=Inches(1.25))
-#
-# records = (
-#     (3, '101', 'Spam'),
-#     (7, '422', 'Eggs'),
-#     (4, '631', 'Spam, spam, eggs, and spam')
-# )
-#
-# table = document.add_table(rows=1, cols=3)
-# hdr_cells = table.rows[0].cells
-# hdr_cells[0].text = 'Qty'
-# hdr_cells[1].text = 'Id'
-# hdr_cells[2].text = 'Desc'
-# for qty, id, desc in records:
-#     row_cells = table.add_row().cells
-#     row_cells[0].text = str(qty)
-#     row_cells[1].text = id
-#     row_cells[2].text = desc
-#
-# document.add_page_break()
-#
-# document.save('demo.docx')

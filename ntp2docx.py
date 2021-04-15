@@ -113,6 +113,12 @@ def ingest(files, curpara):
                             append_ref_to_paragraph(curpara, curlink, curtextrun.contents[0])
                 elif curtextrun.name == "li": # if this is a list of examples
                     curpara.add_run(curtextrun.contents[0])
+                elif curtextrun.name == "em": # if this is italics
+                    runner = curpara.add_run(curtextrun.contents[0])
+                    runner.italic = True
+                elif curtextrun.name == "strong": # if this is bold
+                    runner = curpara.add_run(curtextrun.contents[0])
+                    runner.bold = True
                 else:  # treat everything else as text for now
                     curpara.add_run(curtextrun)
     return curpara

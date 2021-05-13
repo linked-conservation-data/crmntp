@@ -22,7 +22,7 @@ todo
 
 ## Scope note: 
 
-scope note goes here
+This property connects an instance of E1 CRM Entity with a type (E55 Type) which is valid for the class E55 Type. The domain instance does not have by any instances of E55 Type of that type. This should be used to exclude Types of Type not individual types.
 
 ## Examples: 
 

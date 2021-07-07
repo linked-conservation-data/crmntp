@@ -11,6 +11,7 @@ E55 Type
 ## Superproperty of: 
 
 E1 CRM Entity. [NTP48](#ntp48) does not have preferred identifier of type: E55 Type
+
 E71 Human-Made Thing. [NTP102](#ntp102) does not have title of type: E55 Type
 
 ## Quantification: 

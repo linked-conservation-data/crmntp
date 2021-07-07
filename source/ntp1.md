@@ -1,4 +1,4 @@
-# NTP1 is not identified by appellation type
+# NTP1 is not identified by appellation of type
 
 ## Domain: 
 
@@ -19,7 +19,8 @@ todo
 
 ## Scope note: 
 
-This property connects an instance of E1 CRM Entity with a type (E55 Type) which is valid for the class E41 Appellation. The domain instance is not identified by any instances of E41 Appellation of that type.
+This property connects an instance of E1 CRM Entity with a type (E55 Type) which is valid for the class E41 Appellation. 
+The domain instance is not identified by any instances of E41 Appellation of that type.
 
 ## Examples: 
 

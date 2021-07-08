@@ -14,7 +14,6 @@ todo
 
 ## Subproperty of: 
 
-todo
 
 ## Quantification: 
 

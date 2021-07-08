@@ -18,7 +18,7 @@ todo
 
 ## Quantification: 
 
-todo
+many to many (0,n:0,n)
 
 ## Scope note: 
 

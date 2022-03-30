@@ -30,6 +30,22 @@ We can also write:
 ```
 to indicate that there is no `:b` of type `:t`.
 
+This extension provide the `TP` and `NTP` properties alongside their basic axioms that allow them to be retrieved with queries of `P`:
+
+```
+TP a rdf:property ;
+	H1 P ;
+	H2 P2_has_type ;
+	Hn false .
+
+TP rdfs:domain Pd .
+
+TP rdfs:range E55_Type .
+
+```
+
+where `Pd` is the domain of `P`.
+
 A detailed analysis of this is included in a [paper under review and revision](http://semantic-web-journal.org/content/typed-properties-and-negative-typed-properties-dealing-type-observations-and-negative) for the Semantic Web Journal.
 
 In this repository you will find:

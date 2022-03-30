@@ -8,25 +8,17 @@ E2 Temporal Entity
 
 E55 Type
 
-## Superproperty of: 
-
-todo
-
-## Subproperty of: 
-
-todo
-
 ## Quantification: 
 
 todo
 
 ## Scope note: 
 
-scope note goes here
+This property connects an instance of E2 Temporal Entity with a type (E55 Type). The domain instance does not have an instance of E52 Time-Span of that type.
 
 ## Examples: 
 
-* todo
+* The 50th CIDOC-CRM meeting (E7) _does not have time-span of type_ week (E55). [The meeting duration was a few days, i.e. less than a week]
 
 ## In First Order Logic: 
 

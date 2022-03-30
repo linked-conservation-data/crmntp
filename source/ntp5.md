@@ -8,21 +8,14 @@ E3 Condition State
 
 E55 Type
 
-## Superproperty of: 
-
-todo
-
-## Subproperty of: 
-
-todo
-
 ## Quantification: 
 
 todo
 
 ## Scope note: 
 
-scope note goes here
+This property connects an instance of E3 Condition State with a type (E55 Type) which is valid for the class E3 Condition State. 
+The domain instance does not have any parts, instances of E3 Condition State, with that type.
 
 ## Examples: 
 
